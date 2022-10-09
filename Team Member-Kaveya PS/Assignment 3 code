@@ -1,0 +1,20 @@
+void setup() {
+  // put your setup code here, to run once:
+  Serial1.begin(9600);
+  pinMode(21, OUTPUT);
+  pinMode(20, OUTPUT);
+  pinMode(19, OUTPUT);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  digitalWrite(21, HIGH);
+  delay(3000); // this speeds up the simulation
+  digitalWrite(21, LOW);
+  digitalWrite(20, HIGH);
+  delay(3000);
+  digitalWrite(20, LOW);
+  digitalWrite(19, HIGH);
+  delay(3000);
+  digitalWrite(19, LOW);
+}
