@@ -1,0 +1,118 @@
+const int trigPin = 2; 
+const int echoPin = 4; 
+
+const int pirPin = 7; 
+int pirState = LOW;
+
+const int buzzerPin = 8; 
+
+const int redLED = 9; 
+int redBright = 0;    
+int redFade = 5;   
+
+const int greenLED = 10; 
+int greenBright = 0;    
+int greenFade = 5;    
+
+const int button = 13; 
+
+void setup() {
+
+  pinMode(echoPin, INPUT);
+  pinMode(pirPin, INPUT);
+  pinMode(button, INPUT);
+    
+  pinMode(trigPin, OUTPUT);
+  pinMode(redLED, OUTPUT);
+  pinMode(greenLED, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
+  
+  Serial.begin(9600); // initialize serial communication at 9600 bits per second
+}
+
+void distance() {
+  
+  long durationInDigit;
+  long distanceInInches;
+  
+  digitalWrite (trigPin, LOW); 
+  delayMicroseconds(2); 
+  digitalWrite (trigPin, HIGH); 
+  delayMicroseconds(10);
+  digitalWrite (trigPin, LOW);
+  
+  durationInDigit = pulseIn(echoPin, HIGH); 
+  distanceInInches = durationInDigit/74/2;
+  
+  Serial.println(distanceInInches);
+
+    if (distanceInInches > 15 && distanceInInches < 30) {
+      digitalWrite(greenLED, HIGH);
+      digitalWrite(redLED, LOW);
+    }
+  
+    if (distanceInInches < 10) {
+      digitalWrite(redLED, HIGH);
+      digitalWrite(greenLED, LOW);
+    }
+    
+    if (distanceInInches > 10 && distanceInInches < 15){
+      digitalWrite(redLED, LOW);
+      digitalWrite(greenLED, LOW);
+    }
+
+    if (distanceInInches < 5) {
+      digitalWrite(redLED, HIGH);
+      tone(8, 250, 2000);
+      digitalWrite(greenLED, 0);
+    }
+    
+    if (distanceInInches > 5 && distanceInInches < 10){
+      digitalWrite(redLED, HIGH);
+      digitalWrite(buzzerPin, 0);
+      digitalWrite(greenLED, 0);
+    }
+ 
+    if (distanceInInches > 30 || distanceInInches < 0){
+      Serial.println("Distance Incalculable");
+    }
+    
+  delay(500);
+
+}
+
+void reset() {
+  if (digitalRead(button), HIGH);
+   digitalWrite(pirState, LOW);
+   digitalWrite(redLED, LOW);
+digitalWrite(greenLED, HIGH);
+   digitalWrite(buzzerPin, 0);
+   //digitalWrite(echoPin, 0);
+}
+        
+void loop() {
+  
+  distance();
+  
+  int pirState = digitalRead(pirPin);
+  
+  if (pirState==1) {
+    Serial.println("Motion Detected!!!");
+    digitalWrite(greenLED, LOW);
+    digitalWrite(redLED, HIGH);
+    digitalWrite(buzzerPin, 1);
+    delay(500);
+  }
+      
+  if (pirState==0) {
+    Serial.println("Detecting...");
+    digitalWrite(greenLED, HIGH);
+    digitalWrite(redLED, LOW);
+    digitalWrite(buzzerPin, 0);
+    delay(500);
+      }
+
+}
+
+
+
