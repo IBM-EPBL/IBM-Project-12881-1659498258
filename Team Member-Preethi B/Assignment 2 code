@@ -1,0 +1,14 @@
+import random 
+import time 
+while(1!=0):
+temperature = random.random() 
+humidity = random.random()
+#round(temperature,2)  #round(humidity,2) 
+print (“Temperature: ","%.5f" % temperature) 
+print("Humidity: ","%.5f" % humidity) 
+time.sleep(2)
+if (temperature > 0.7): 
+print("high temperature")
+if ( humidity >0.7): 
+print("high humidity")
+print("")
